@@ -24,7 +24,7 @@
     )
     
     func main() {
-		    n, err := gonlpir.NewNLPIR("../", gonlpir.UTF8, "")
+        n, err := gonlpir.NewNLPIR("../", gonlpir.UTF8, "")
         if err != nil {
             panic(err)
         }
