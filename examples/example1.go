@@ -24,5 +24,11 @@ import (
 )
 
 func main() {
-
+	n, err := gonlpir.NewNLPIR("../", gonlpir.UTF8, "")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(n.ParagraphProcess("我是中国人", true))
+	fmt.Println(n.ParagraphProcess("我是中国人", false))
+	n.Exit()
 }

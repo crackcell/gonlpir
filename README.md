@@ -16,22 +16,22 @@
 
 示例代码
 
-
-
-## 示例
-
-    go test
-
-输出
-
-    TestParagraphProcess: 我是中国人
-    我/rr 是/vshi 中国/ns 人/n
-    TestParagraphProcessA: 我是中国人
-    &gonlpir.Result{word:"我", spos:[]string{"r", "r"}, ipos:42, wordId:11795, wordType:0, weight:6305}
-    &gonlpir.Result{word:"是", spos:[]string{"v", "s", "h", "i"}, ipos:75, wordId:40459, wordType:0, weight:4710}
-    &gonlpir.Result{word:"中国", spos:[]string{"n", "s"}, ipos:29, wordId:32696, wordType:0, weight:6097}
-    &gonlpir.Result{word:"人", spos:[]string{"n"}, ipos:21, wordId:37533, wordType:0, weight:6055}
-    PASS
+    package main
+    
+    import (
+        "fmt"
+        "github.com/crackcell/gonlpir"
+    )
+    
+    func main() {
+		    n, err := gonlpir.NewNLPIR("../", gonlpir.UTF8, "")
+        if err != nil {
+            panic(err)
+        }
+        fmt.Println(n.ParagraphProcess("我是中国人", true))
+        fmt.Println(n.ParagraphProcess("我是中国人", false))
+        n.Exit()
+    }
 
 ## 文档
 
