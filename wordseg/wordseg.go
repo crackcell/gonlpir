@@ -43,27 +43,26 @@ var (
 )
 
 const (
-	LogoString = ` _______         __
-|   |   |.-----.|__|.-----.-----.
-|       ||  _  ||  ||  _  |  -__|
-|___|___||   __||__||   __|_____|
-         |__|       |__|
-`
-	HelpString = `Execute a hpipe workflow
+	LogoString = ` _______         _______ _____   ______
+|     __|.-----.|    |  |     |_|   __ \
+|    |  ||  _  ||       |       |    __/
+|_______||_____||__|____|_______|___|`
+
+	HelpString = `Standalone GoNLP
 Usage:
-    hpipe-run [options]
+    wordseg [options]
 Options:
     -h, --help     Print this message
     -v, --verbose  Use verbose output
-    -w, --work     Root path of workflow
-    -m, --meta     Path of meta data
-    -f, --flow     Entry filename of workflow
-    --rerun        Rerun jobs with status DONE
+    -d, --data     Root path of data
+    -e, --encoding Encoding
 `
 )
 
 func showHelp() {
-	fmt.Print(HelpString)
+	fmt.Println(LogoString)
+	fmt.Println()
+	fmt.Println(HelpString)
 	os.Exit(0)
 }
 
