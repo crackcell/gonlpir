@@ -16,6 +16,8 @@
 
 示例代码
 
+先将include和lib文件夹加到头文件和库文件搜索路径中去
+
     package main
     
     import (
