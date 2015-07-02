@@ -1,4 +1,4 @@
-# gonlpir
+# GoNLPIR
 
 ## 简介
 
