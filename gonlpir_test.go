@@ -10,13 +10,13 @@
 /**
  *
  *
- * @file ggnlpir_test.go
+ * @file gonlpir_test.go
  * @author Menglong TAN <tanmenglong@gmail.com>
  * @date Sun Mar  8 15:40:16 2015
  *
  **/
 
-package ggnlpir
+package gonlpir
 
 import (
 	"fmt"

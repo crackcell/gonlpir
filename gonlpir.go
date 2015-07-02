@@ -10,13 +10,13 @@
 /**
  *
  *
- * @file ggnlpir.go
+ * @file gonlpir.go
  * @author Menglong TAN <tanmenglong@gmail.com>
  * @date Sat Mar  7 13:36:13 2015
  *
  **/
 
-package ggnlpir
+package gonlpir
 
 /*
 #include <stdio.h>
