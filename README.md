@@ -1,4 +1,4 @@
-# GoNLPIR
+# ggnlpir
 
 ## 简介
 
@@ -12,7 +12,7 @@
 
 获得代码
 
-    go get github.com/crackcell/gonlpir
+    go get github.com/crackcell/ggnlpir
 
 示例代码
 
@@ -22,11 +22,11 @@
     
     import (
         "fmt"
-        "github.com/crackcell/gonlpir"
+        "github.com/crackcell/ggnlpir"
     )
     
     func main() {
-        n, err := gonlpir.NewNLPIR("../", gonlpir.UTF8, "")
+        n, err := ggnlpir.NewNLPIR("../", ggnlpir.UTF8, "")
         if err != nil {
             panic(err)
         }
@@ -37,6 +37,5 @@
 
 ## 文档
 
-- 汉语词性对照表: https://github.com/crackcell/gonlpir/blob/master/doc/word_types.md
-- 了解更多: http://blog.crackcell.com/posts/2015/03/10/gonlpir_golang_wrapper_for_nlpir_ictclas.html
-
+- 汉语词性对照表: https://github.com/crackcell/ggnlpir/blob/master/doc/word_types.md
+- 了解更多: http://blog.crackcell.com/posts/2015/03/10/ggnlpir_golang_wrapper_for_nlpir_ictclas.html
