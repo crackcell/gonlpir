@@ -28,7 +28,7 @@ import (
 //===================================================================
 
 func TestParagraphProcess(t *testing.T) {
-	nlpir, err := NewNLPIR("./", UTF8, "")
+	nlpir, err := NewNLPIR("./deps", UTF8, "")
 	if err != nil {
 		t.Error(err)
 		return
@@ -38,7 +38,7 @@ func TestParagraphProcess(t *testing.T) {
 }
 
 func TestParagraphProcessA(t *testing.T) {
-	nlpir, err := NewNLPIR("./", UTF8, "")
+	nlpir, err := NewNLPIR("./deps", UTF8, "")
 	if err != nil {
 		t.Error(err)
 		return

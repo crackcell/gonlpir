@@ -21,10 +21,10 @@ package gonlpir
 /*
 #include <stdio.h>
 #include <stdlib.h>
-#include <NLPIR.h>
+#include <gonlpir.h>
 
-#cgo linux CFLAGS: -I./include -DOS_LINUX
-#cgo linux LDFLAGS: -L./lib/linux64 -lNLPIR
+#cgo linux CFLAGS: -DOS_LINUX
+#cgo linux LDFLAGS: -lNLPIR
 */
 import "C"
 import "unsafe"
