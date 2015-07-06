@@ -1,0 +1,10 @@
+sudo: required
+
+language: go
+
+script:
+    - unzip deps/20150702124141_ICTCLAS2015.zip
+    - go test -v
+
+notifications:
+    email: false
