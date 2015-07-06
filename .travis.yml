@@ -2,8 +2,12 @@ sudo: required
 
 language: go
 
+install:
+    - unzip deps/20150702124141_ICTCLAS2015.zip -d deps
+    - sudo cp deps/*/lib/linux64/*.so /usr/lib/
+    - sudo cp deps/*/include/*.h /usr/include
+
 script:
-    - unzip deps/20150702124141_ICTCLAS2015.zip
     - go test -v
 
 notifications:
