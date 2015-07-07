@@ -3,7 +3,7 @@ sudo: required
 language: go
 
 install:
-    - sudo cp deps/lib/linux64/*.so /usr/lib64/
+    - if [ -e /usr/lib64 ]; then sudo cp deps/lib/linux64/*.so /usr/lib64/; else sudo cp deps/lib/linux64/*.so /usr/lib/; fi
     - sudo cp deps/include/*.h /usr/include
 
 script:
