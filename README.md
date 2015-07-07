@@ -11,9 +11,11 @@
 
 ## 安装
 
-获得代码
+获得代码 并 安装依赖
 
     go get github.com/crackcell/gonlpir
+    make install_deps
+    go test -v
 
 示例代码
 
