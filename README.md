@@ -1,25 +1,23 @@
 # GoNLPIR
 [![Build Status](https://travis-ci.org/crackcell/gonlpir.svg?branch=master)](https://travis-ci.org/crackcell/gonlpir)
 
-## 简介
+## Introduction
 
-中科院分词（ICTCLAS/NLPIR）的Go语言封装，目前提供的接口:
+GoNLPIR is a Golang wrapper for the famous Chinese word segmenter NLPIR(former ICTCLAS ) with the following interface implemented:
 
 - ParagraphProcess
 - ParagraphProcessA
 - ImportUserDict
 
-## 安装
+## Install
 
-获得代码 并 安装依赖
+Get code and install dependences
 
     go get github.com/crackcell/gonlpir
     make install_deps
     go test -v
 
-示例代码
-
-先将include和lib文件夹加到头文件和库文件搜索路径中去
+Example
 
     package main
     
@@ -38,7 +36,7 @@
         n.Exit()
     }
 
-## 文档
+## Documents
 
-- 汉语词性对照表: https://github.com/crackcell/gonlpir/blob/master/doc/word_types.md
-- 了解更多: http://blog.crackcell.com/posts/2015/03/10/gonlpir_golang_wrapper_for_nlpir_ictclas.html
+- Symbols of part of speech: https://github.com/crackcell/gonlpir/blob/master/doc/word_types.md
+- Learn more: http://blog.crackcell.com/posts/2015/03/10/gonlpir_golang_wrapper_for_nlpir_ictclas.html
