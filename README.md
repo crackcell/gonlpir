@@ -1,4 +1,5 @@
 # GoNLPIR
+[![Build Status](https://travis-ci.org/crackcell/gonlpir.svg?branch=master)](https://travis-ci.org/crackcell/gonlpir)
 
 ## 简介
 
