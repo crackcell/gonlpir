@@ -40,3 +40,9 @@ Example
 
 - Symbols of part of speech: https://github.com/crackcell/gonlpir/blob/master/doc/word_types.md
 - Learn more: http://blog.crackcell.com/posts/2015/03/10/gonlpir_golang_wrapper_for_nlpir_ictclas.html
+
+## Misc
+
+- Official NLPIR site:
+  - http://www.nlpir.org/
+  - https://github.com/NLPIR-team/NLPIR
