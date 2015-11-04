@@ -49,12 +49,12 @@ type NLPIR struct {
 }
 
 type Result struct {
-	word     string
-	spos     string
-	ipos     int
-	wordId   int
-	wordType int
-	weight   int
+	Word     string
+	Spos     string
+	Ipos     int
+	WordId   int
+	WordType int
+	Weight   int
 }
 
 func NewResult() *Result {
@@ -106,7 +106,6 @@ func (this *NLPIR) ParagraphProcessA(paragraph string, useUserDict bool) []*Resu
 	n := C.int(0)
 
 	p := C.NLPIR_ParagraphProcessA(cs, &n, C.int(BoolToInt(useUserDict)))
-	C.free(unsafe.Pointer(p))
 
 	r := (*[1 << 30]C.struct_Result)(unsafe.Pointer(p))[:n:n]
 
@@ -115,17 +114,17 @@ func (this *NLPIR) ParagraphProcessA(paragraph string, useUserDict bool) []*Resu
 
 	for i := 0; i < len(r); i++ {
 		res := NewResult()
-		res.word = string(b[r[i].start : r[i].start+r[i].length])
+		res.Word = string(b[r[i].start : r[i].start+r[i].length])
 		for j := 0; j < len(r[i].sPOS); j++ {
 			if r[i].sPOS[j] == 0 {
 				continue
 			}
-			res.spos += string(r[i].sPOS[j])
+			res.Spos += string(r[i].sPOS[j])
 		}
-		res.ipos = int(r[i].iPOS)
-		res.wordId = int(r[i].word_ID)
-		res.wordType = int(r[i].word_type)
-		res.weight = int(r[i].weight)
+		res.Ipos = int(r[i].iPOS)
+		res.WordId = int(r[i].word_ID)
+		res.WordType = int(r[i].word_type)
+		res.Weight = int(r[i].weight)
 
 		results = append(results, res)
 	}

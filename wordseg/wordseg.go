@@ -19,10 +19,10 @@
 package main
 
 import (
-	"../../gonlpir"
 	"bufio"
 	"flag"
 	"fmt"
+	"github.com/crackcell/gonlpir"
 	"os"
 	"strings"
 )
@@ -43,12 +43,12 @@ var (
 )
 
 const (
-	LogoString = ` _______         _______ _____   ______
-|     __|.-----.|    |  |     |_|   __ \
-|    |  ||  _  ||       |       |    __/
-|_______||_____||__|____|_______|___|`
+	LogoString = ` _______         _______ _____   ______ _______ ______
+|     __|.-----.|    |  |     |_|   __ \_     _|   __ \
+|    |  ||  _  ||       |       |    __/_|   |_|      <
+|_______||_____||__|____|_______|___|  |_______|___|__|`
 
-	HelpString = `Standalone GoNLP
+	HelpString = `Standalone GoNLPIR wordseg
 Usage:
     wordseg [options]
 Options:
@@ -110,7 +110,9 @@ func main() {
 	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
 		text := scanner.Text()
-		fmt.Println(seg.ParagraphProcess(text, true))
+		for _, result := range seg.ParagraphProcessA(text, true) {
+			fmt.Println(result.Word)
+		}
 	}
 
 	seg.Exit()
