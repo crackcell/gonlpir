@@ -20,9 +20,9 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"github.com/crackcell/gonlpir"
+	"github.com/crackcell/gonlpir/wordseg/config"
 	"os"
 	"strings"
 )
@@ -35,38 +35,8 @@ import (
 // Private
 //===================================================================
 
-var (
-	help     bool
-	verbose  bool
-	dataPath string
-	encoding string
-)
-
-const (
-	LogoString = ` _______         _______ _____   ______ _______ ______
-|     __|.-----.|    |  |     |_|   __ \_     _|   __ \
-|    |  ||  _  ||       |       |    __/_|   |_|      <
-|_______||_____||__|____|_______|___|  |_______|___|__|`
-
-	HelpString = `Standalone GoNLPIR wordseg
-Usage:
-    wordseg [options]
-Options:
-    -h, --help     Print this message
-    -v, --verbose  Use verbose output
-    -d, --data     Root path of data
-    -e, --encoding Encoding
-`
-)
-
-func showHelp() {
-	fmt.Println(LogoString)
-	fmt.Println()
-	fmt.Println(HelpString)
-	os.Exit(0)
-}
-
 func parseEncodingString(s string) int {
+	s = strings.ToLower(s)
 	if strings.EqualFold(s, "gbk") {
 		return gonlpir.GBK
 	}
@@ -87,21 +57,18 @@ func parseEncodingString(s string) int {
 }
 
 func main() {
-	flag.BoolVar(&help, "help", false, "Print help message")
-	flag.BoolVar(&help, "h", false, "Print help message")
-	flag.BoolVar(&verbose, "verbose", false, "Use verbose output")
-	flag.BoolVar(&verbose, "v", false, "Use verbose output")
-	flag.StringVar(&dataPath, "data", "./", "Path of data folder")
-	flag.StringVar(&dataPath, "d", "./", "Path of data folder")
-	flag.StringVar(&encoding, "encoding", "UTF8", "Encoding: UTF8")
-	flag.StringVar(&encoding, "e", "UTF8", "Encoding: GBK, UTF8, BIG5, GBK_FANTI, UTF8_FANTI")
+	config.InitFlags()
+	config.Parse()
 
-	flag.Parse()
-	if help {
-		showHelp()
+	file, err := os.OpenFile(config.Output, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+	if err != nil {
+		fmt.Println("open output file failed")
+		os.Exit(1)
 	}
+	defer file.Close()
 
-	seg, err := gonlpir.NewNLPIR(dataPath, parseEncodingString(encoding), "")
+	seg, err := gonlpir.NewNLPIR(config.DataPath,
+		parseEncodingString(config.Encoding), "")
 	if err != nil {
 		os.Exit(1)
 	}
@@ -111,7 +78,14 @@ func main() {
 	for scanner.Scan() {
 		text := scanner.Text()
 		for _, result := range seg.ParagraphProcessA(text, true) {
-			fmt.Println(result.Word)
+			str := result.Word
+			if config.ShowPOS {
+				str += config.FieldDelimiter + result.Spos
+			}
+			str += config.LineDelimiter
+			if _, err := file.WriteString(str); err != nil {
+				panic(err)
+			}
 		}
 	}
 
