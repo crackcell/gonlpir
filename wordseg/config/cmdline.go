@@ -22,6 +22,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 )
 
 //===================================================================
@@ -31,9 +32,9 @@ import (
 var (
 	Help           bool
 	Verbose        bool
-	Output         string
 	DataPath       string
-	Encoding       string
+	InputEncoding  string
+	OutputEncoding string
 	LineDelimiter  string
 	FieldDelimiter string
 	ShowPOS        bool
@@ -44,12 +45,12 @@ func InitFlags() {
 	flag.BoolVar(&Help, "h", false, "Print help message")
 	flag.BoolVar(&Verbose, "verbose", false, "Use verbose output")
 	flag.BoolVar(&Verbose, "v", false, "Use verbose output")
-	flag.StringVar(&Output, "o", "", "Output file")
-	flag.StringVar(&Output, "output", "", "Output file")
 	flag.StringVar(&DataPath, "data", "", "ICTCLAS data path")
 	flag.StringVar(&DataPath, "d", "", "ICTCLAS data path")
-	flag.StringVar(&Encoding, "e", "UTF8", "Encoding")
-	flag.StringVar(&Encoding, "encoding", "UTF8", "Encoding")
+	flag.StringVar(&InputEncoding, "ie", "UTF8", "Encoding of input stream")
+	flag.StringVar(&InputEncoding, "input-encoding", "UTF8", "Encoding of input stream")
+	flag.StringVar(&OutputEncoding, "oe", "UTF8", "Encoding of output stream")
+	flag.StringVar(&OutputEncoding, "output-encoding", "UTF8", "Encoding of output stream")
 	flag.StringVar(&LineDelimiter, "ld", "\n", "Line delimiter")
 	flag.StringVar(&LineDelimiter, "line-delimiter", "\n", "Line delimiter")
 	flag.StringVar(&FieldDelimiter, "fd", "\t", "Field delimiter")
@@ -66,10 +67,7 @@ func Parse() {
 		fmt.Println("invalid arguments: no data")
 		showHelp(1)
 	}
-	if len(Output) == 0 {
-		fmt.Println("invalid arguments: no output")
-		showHelp(1)
-	}
+	OutputEncoding = strings.ToLower(OutputEncoding)
 }
 
 //===================================================================
@@ -90,15 +88,15 @@ Options:
     -h, --help               Print this message
     -v, --verbose            Use verbose output
 
-    -o, --output             Output file
-
     -d, --data               Data path
 
-    -e, --encoding           Specify encoding of input data
+    --ie, --input-encoding   Specify encoding of input stream
                              available: gbk, utf8, big5, gbk_fanti, utf8_fanti
+    --oe, --output-encoding  Specify encoding of output file
+                             available: gbk, utf8, big5 and other codenames
 
-    --ld, --line-delimiter   Specify line delimiter, default: \\n
-    --fd, --field-delimiter  Specify field delimiter, default: \\t
+    --ld, --line-delimiter   Specify line delimiter, default: \n
+    --fd, --field-delimiter  Specify field delimiter, default: \t
 
     --pos                    Show POS (Part of speech) info
 `

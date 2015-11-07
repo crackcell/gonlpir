@@ -21,6 +21,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/axgle/mahonia"
 	"github.com/crackcell/gonlpir"
 	"github.com/crackcell/gonlpir/wordseg/config"
 	"os"
@@ -35,41 +36,48 @@ import (
 // Private
 //===================================================================
 
-func parseEncodingString(s string) int {
-	s = strings.ToLower(s)
-	if strings.EqualFold(s, "gbk") {
-		return gonlpir.GBK
-	}
-	if strings.EqualFold(s, "utf8") {
-		return gonlpir.UTF8
-	}
-	if strings.EqualFold(s, "big5") {
-		return gonlpir.BIG5
-	}
-	if strings.EqualFold(s, "gbk_fanti") {
-		return gonlpir.GBK_FANTI
-	}
-	if strings.EqualFold(s, "utf8_fanti") {
-		return gonlpir.UTF8_FANTI
-	}
+type EncodingTable struct {
+	ictclasOption string
+	ictclasType   int
+	dec           mahonia.Decoder
+}
 
-	return gonlpir.UTF8
+var encodingTable = []EncodingTable{
+	{"gbk", gonlpir.GBK, mahonia.NewDecoder("gbk")},
+	{"utf8", gonlpir.UTF8, mahonia.NewDecoder("utf8")},
+	{"big5", gonlpir.BIG5, mahonia.NewDecoder("big5")},
+	{"gbk_fanti", gonlpir.GBK_FANTI, mahonia.NewDecoder("gbk")},
+	{"utf8_fanti", gonlpir.UTF8_FANTI, mahonia.NewDecoder("utf8")},
+}
+
+func getEncodingTable(s string) *EncodingTable {
+	for _, e := range encodingTable {
+		if strings.EqualFold(s, e.ictclasOption) {
+			return &e
+		}
+	}
+	return nil
 }
 
 func main() {
 	config.InitFlags()
 	config.Parse()
 
-	file, err := os.OpenFile(config.Output, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
-	if err != nil {
-		fmt.Println("open output file failed")
+	encTable := getEncodingTable(config.InputEncoding)
+	if encTable == nil {
+		fmt.Printf("failed to get encoding table for: %s\n",
+			config.InputEncoding)
 		os.Exit(1)
 	}
-	defer file.Close()
+	enc := mahonia.NewEncoder(config.OutputEncoding)
+	if enc == nil {
+		fmt.Printf("failed to create encoder for: %s\n", config.OutputEncoding)
+		os.Exit(1)
+	}
 
-	seg, err := gonlpir.NewNLPIR(config.DataPath,
-		parseEncodingString(config.Encoding), "")
+	seg, err := gonlpir.NewNLPIR(config.DataPath, encTable.ictclasType, "")
 	if err != nil {
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
@@ -78,14 +86,12 @@ func main() {
 	for scanner.Scan() {
 		text := scanner.Text()
 		for _, result := range seg.ParagraphProcessA(text, true) {
-			str := result.Word
+			str := enc.ConvertString(encTable.dec.ConvertString(result.Word))
 			if config.ShowPOS {
 				str += config.FieldDelimiter + result.Spos
 			}
 			str += config.LineDelimiter
-			if _, err := file.WriteString(str); err != nil {
-				panic(err)
-			}
+			fmt.Printf(str)
 		}
 	}
 
