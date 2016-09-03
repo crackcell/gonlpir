@@ -19,12 +19,12 @@
 package gonlpir
 
 /*
+#cgo linux CFLAGS: -DOS_LINUX -I./deps/include
+#cgo linux LDFLAGS: -L./deps/lib/linux64 -lNLPIR
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <gonlpir.h>
-
-#cgo linux CFLAGS: -DOS_LINUX
-#cgo linux LDFLAGS: -lNLPIR
 */
 import "C"
 import "unsafe"
